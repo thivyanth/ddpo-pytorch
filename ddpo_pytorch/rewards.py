@@ -4,6 +4,29 @@ import numpy as np
 import torch
 
 
+def clip_score():
+    from ddpo_pytorch.clipscore import CLIPScore
+    def _fn(images, prompts, metadata):
+        clipscore_model = CLIPScore()
+        clipscore_model.to('cuda')
+
+        if isinstance(images, torch.Tensor):
+            images = (images * 255).round().clamp(0, 255).to(torch.uint8).cpu().numpy()
+            images = images.transpose(0, 2, 3, 1)  # NCHW -> NHWC
+
+        scores = []
+        for image, prompt in zip(images, prompts):
+            image = Image.fromarray(image)
+            img_feat = clipscore_model.image_extract(image)
+            text_feat = clipscore_model.text_extract(prompt)
+            score = clipscore_model.calc_clip_s(img_feat, text_feat)
+            scores.append(score.item())
+
+        return np.array(scores), {}
+
+    return _fn  
+
+
 def jpeg_incompressibility():
     def _fn(images, prompts, metadata):
         if isinstance(images, torch.Tensor):
