@@ -1,6 +1,8 @@
 # ddpo-pytorch
 
-This is an implementation of [Denoising Diffusion Policy Optimization (DDPO)](https://rl-diffusion.github.io/) in PyTorch with support for [low-rank adaptation (LoRA)](https://huggingface.co/docs/diffusers/training/lora). Unlike our original research code (which you can find [here](https://github.com/jannerm/ddpo)), this implementation runs on GPUs, and if LoRA is enabled, requires less than 10GB of GPU memory to finetune Stable Diffusion!
+This is an implementation of [Denoising Diffusion Policy Optimization (DDPO)](https://rl-diffusion.github.io/) in PyTorch with support for [low-rank adaptation (LoRA)](https://huggingface.co/docs/diffusers/training/lora). If LoRA is enabled, requires less than 10GB of GPU memory to finetune Stable Diffusion!
+
+This fork is made to create a config with clip-reward a reward function.
 
 ![DDPO](teaser.jpg)
 
@@ -8,7 +10,7 @@ This is an implementation of [Denoising Diffusion Policy Optimization (DDPO)](ht
 Requires Python 3.10 or newer.
 
 ```bash
-git clone git@github.com:kvablack/ddpo-pytorch.git
+git clone git@github.com:thivyanth/ddpo-pytorch.git
 cd ddpo-pytorch
 pip install -e .
 ```
